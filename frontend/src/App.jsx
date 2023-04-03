@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import formatNumber from './utilities';
 import axios from 'axios';
 
 const filterCountriesByName = (countries, search) =>
@@ -29,7 +30,7 @@ function App() {
         <div>
           <h2>{country.name.common}</h2>
           <p>Capital: {country.capital}</p>
-          <p>Population: {country.population}</p>
+          <p>Population: {formatNumber(country.population)}</p>
           <img src={country.flags.png} alt={country.name.common} width='300' />
         </div>
       );
@@ -39,7 +40,7 @@ function App() {
         <div key={country.cca3}>
           <h2>{country.name.common}</h2>
           <p>Capital: {country.capital}</p>
-          <p>Population: {country.population}</p>
+          <p>Population: {formatNumber(country.population)}</p>
           <img src={country.flags.png} alt={country.name.common} width='50' />
         </div>
       ));
