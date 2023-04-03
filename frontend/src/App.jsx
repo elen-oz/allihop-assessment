@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const filterCountriesByName = (countries, search) => countries.filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()));
+const filterCountriesByName = (countries, search) =>
+  countries.filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()));
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -14,6 +15,10 @@ function App() {
       .catch((error) => console.log(error));
   }, []);
 
+  const filteredCountries = filterCountriesByName(countries, search);
+
+  const handleSearchChange = (event) => setSearch(event.target.value);
+
   const renderCountries = () => {
     if (filteredCountries.length === 0) {
       return <p>No countries found.</p>;
@@ -23,17 +28,9 @@ function App() {
       return (
         <div>
           <h2>{country.name.common}</h2>
-          <p>
-            Capital:
-            {' '}
-            {country.capital}
-          </p>
-          <p>
-            Population:
-            {' '}
-            {formatNumber(country.population)}
-          </p>
-          <img src={country.flags.png} alt={country.name.common} width="300" />
+          <p>Capital: {country.capital}</p>
+          <p>Population: {country.population}</p>
+          <img src={country.flags.png} alt={country.name.common} width='300' />
         </div>
       );
     }
@@ -41,17 +38,9 @@ function App() {
       return filteredCountries.map((country) => (
         <div key={country.cca3}>
           <h2>{country.name.common}</h2>
-          <p>
-            Capital:
-            {' '}
-            {country.capital}
-          </p>
-          <p>
-            Population:
-            {' '}
-            {formatNumber(country.population)}
-          </p>
-          <img src={country.flags.png} alt={country.name.common} width="50" />
+          <p>Capital: {country.capital}</p>
+          <p>Population: {country.population}</p>
+          <img src={country.flags.png} alt={country.name.common} width='50' />
         </div>
       ));
     }
@@ -62,10 +51,9 @@ function App() {
     <div>
       <h1>Countries</h1>
       <div>
-        <label htmlFor="country-input">
-          Find countries:
-          {' '}
-          <input type="text" value={search} id="country-input" onChange={handleSearchChange} />
+        <label htmlFor='country-input'>
+          Find countries:{' '}
+          <input type='text' value={search} id='country-input' onChange={handleSearchChange} />
         </label>
       </div>
       {renderCountries()}
