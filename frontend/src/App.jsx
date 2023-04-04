@@ -14,13 +14,43 @@ function App() {
   useEffect(() => {
     axios
       .get('https://restcountries.com/v3.1/all')
-      .then((response) => setCountries(response.data))
+      .then((response) => {
+        console.log('-=', response.data);
+        setCountries(response.data);
+      })
       .catch((error) => console.log(error));
   }, []);
 
   const filteredCountries = filterCountriesByName(countries, search);
 
-  const handleSearchChange = (event) => setSearch(event.target.value);
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const renderSingleCountry = (country) => {
+    return (
+      <div className='container'>
+        <div className='card col-md-5'>
+          <div>
+            <img
+              className='card-img-top rounded float-start'
+              src={country.flags.png}
+              alt={country.name.common}
+            />
+          </div>
+
+          <div className='card-body'>
+            <h2>{country.name.common}</h2>
+            <p className='lead'>Capital: {country.capital}</p>
+            <p>Population: {formatNumber(country.population)}</p>
+            <a href='#' className='btn btn-primary btn-showmore'>
+              Show more
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const renderCountries = () => {
     if (filteredCountries.length === 0) {
@@ -28,31 +58,19 @@ function App() {
     }
     if (filteredCountries.length === 1) {
       const country = filteredCountries[0];
-      return (
-        <div className='card'>
-          <img
-            className='card-img-top'
-            src={country.flags.png}
-            alt={country.name.common}
-            width='200'
-          />
-          <div className='card-body'>
-            <h2>{country.name.common}</h2>
-
-            <p className='lead'>Capital: {country.capital}</p>
-            <p>Population: {formatNumber(country.population)}</p>
-          </div>
-        </div>
-      );
+      return renderSingleCountry(country);
     }
     if (filteredCountries.length <= 10) {
       return filteredCountries.map((country) => (
-        <div className='card mb-1' key={country.cca3}>
+        <div className='el-list-cards card mb-1' key={country.cca3}>
           <div className='card-body' key={country.cca3}>
             <h2 className='display-6'>{country.name.common}</h2>
             <ul className='list-unstyled'>
               <li>Capital: {country.capital}</li>
               <li>Population: {formatNumber(country.population)}</li>
+              <a href='#' className='btn btn-primary btn-showmore'>
+                Show more
+              </a>
             </ul>
           </div>
         </div>
