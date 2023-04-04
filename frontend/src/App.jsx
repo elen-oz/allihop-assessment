@@ -15,7 +15,6 @@ function App() {
     axios
       .get('https://restcountries.com/v3.1/all')
       .then((response) => {
-        console.log('-=', response.data);
         setCountries(response.data);
       })
       .catch((error) => console.log(error));
@@ -43,9 +42,6 @@ function App() {
             <h2>{country.name.common}</h2>
             <p className='lead'>Capital: {country.capital}</p>
             <p>Population: {formatNumber(country.population)}</p>
-            {/* <a href='#' className='btn btn-primary btn-showmore'>
-              Show more
-            </a> */}
           </div>
         </div>
       </div>
