@@ -1,4 +1,4 @@
-const formatNumber = (num) => {
+export const formatNumber = (num) => {
   let result;
   if (num < 1000) {
     result = num.toString();
@@ -10,5 +10,3 @@ const formatNumber = (num) => {
 
   return result;
 };
-
-export default formatNumber;

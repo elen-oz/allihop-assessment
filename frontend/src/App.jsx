@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import formatNumber from './utilities';
+import { formatNumber } from './utilities';
 
 const filterCountriesByName = (countries, search) =>
   countries.filter((country) =>
@@ -42,17 +42,27 @@ function App() {
             <h2>{country.name.common}</h2>
             <p className='lead'>Capital: {country.capital}</p>
             <p>Population: {formatNumber(country.population)}</p>
+            <p>Where located: {country.subregion}</p>
+            <p>
+              <a
+                href={country.maps.googleMaps}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                See on map
+              </a>
+            </p>
           </div>
         </div>
       </div>
     );
   };
 
-  const listOfCountries = () => {
+  const handleListOfCountries = () => {
     return filteredCountries.map((country) => (
       <div className='el-list-cards card mb-1' key={country.cca3}>
         <div className='card-body' key={country.cca3}>
-          <div className='col-md-5 float-start'>
+          <div className='col-md-5 float-start el-card-country'>
             <h2 className='display-6'>{country.name.common}</h2>
             <ul className='list-unstyled'>
               <li>Capital: {country.capital}</li>
@@ -83,7 +93,7 @@ function App() {
       return renderSingleCountry(country);
     }
     if (filteredCountries.length <= 10) {
-      return listOfCountries();
+      return handleListOfCountries();
     }
     return (
       <p className='lead'>Too many matches, please specify another filter.</p>
