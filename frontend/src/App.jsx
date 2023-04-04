@@ -11,6 +11,7 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState('');
 
+  //  fetch data from the REST Countries API
   useEffect(() => {
     axios
       .get('https://restcountries.com/v3.1/all')
@@ -20,12 +21,15 @@ function App() {
       .catch((error) => console.log(error));
   }, []);
 
+  // array of filtred countries (by input)
   const filteredCountries = filterCountriesByName(countries, search);
 
+  //  update the search-state whenever the user types in input field
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
 
+  //  display information about 1 country (when needs render only 1 country)
   const renderSingleCountry = (country) => {
     return (
       <div className='container'>
@@ -58,6 +62,7 @@ function App() {
     );
   };
 
+  //  display information list of countries (until user has finished typing )
   const handleListOfCountries = () => {
     return filteredCountries.map((country) => (
       <div className='el-list-cards card mb-1' key={country.cca3}>
@@ -84,6 +89,7 @@ function App() {
     ));
   };
 
+  // returns different sets of React components depending on the number of matches
   const renderCountries = () => {
     if (filteredCountries.length === 0) {
       return <p>No countries found.</p>;
@@ -100,6 +106,7 @@ function App() {
     );
   };
 
+  // CONTROL. User workspace: input and outout
   return (
     <section className='container-fluid'>
       <div className='row mb-3'>
