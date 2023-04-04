@@ -43,13 +43,39 @@ function App() {
             <h2>{country.name.common}</h2>
             <p className='lead'>Capital: {country.capital}</p>
             <p>Population: {formatNumber(country.population)}</p>
-            <a href='#' className='btn btn-primary btn-showmore'>
+            {/* <a href='#' className='btn btn-primary btn-showmore'>
               Show more
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
     );
+  };
+
+  const listOfCountries = () => {
+    return filteredCountries.map((country) => (
+      <div className='el-list-cards card mb-1' key={country.cca3}>
+        <div className='card-body' key={country.cca3}>
+          <div className='col-md-5 float-start'>
+            <h2 className='display-6'>{country.name.common}</h2>
+            <ul className='list-unstyled'>
+              <li>Capital: {country.capital}</li>
+              <li>Population: {formatNumber(country.population)}</li>
+            </ul>
+          </div>
+
+          <div className='card col-md-2 float-end'>
+            <div>
+              <img
+                className='card-img-top rounded'
+                src={country.flags.png}
+                alt={country.name.common}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    ));
   };
 
   const renderCountries = () => {
@@ -61,20 +87,7 @@ function App() {
       return renderSingleCountry(country);
     }
     if (filteredCountries.length <= 10) {
-      return filteredCountries.map((country) => (
-        <div className='el-list-cards card mb-1' key={country.cca3}>
-          <div className='card-body' key={country.cca3}>
-            <h2 className='display-6'>{country.name.common}</h2>
-            <ul className='list-unstyled'>
-              <li>Capital: {country.capital}</li>
-              <li>Population: {formatNumber(country.population)}</li>
-              <a href='#' className='btn btn-primary btn-showmore'>
-                Show more
-              </a>
-            </ul>
-          </div>
-        </div>
-      ));
+      return listOfCountries();
     }
     return (
       <p className='lead'>Too many matches, please specify another filter.</p>
