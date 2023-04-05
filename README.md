@@ -17,3 +17,8 @@ The display of the found countries is made in the form of a list of cards.
 ```sh
 make install
 ```
+## Starting
+
+```sh
+make start
+```
